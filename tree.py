@@ -4,6 +4,7 @@ import random
 class Tree:
 
     def __init__(self, x, y, forest_size, age=0):
+
         self.location = (x, y)
         self.months_old = age  # 12 at initialization step, 0 otherwise
         self.forest_size = forest_size
@@ -15,8 +16,8 @@ class Tree:
             return
 
         # Roll for every open space around tree to see if it spawns new tree.
-        for x in range(self.location[0] - 1, self.location[0] + 1):
-            for y in range(self.location[1] - 1, self.location[1] + 1):
+        for x in range(self.location[0] - 1, self.location[0] + 2):
+            for y in range(self.location[1] - 1, self.location[1] + 2):
 
                 # Account for overflow or underflow on forest grid
                 if x > self.forest_size:
@@ -40,9 +41,9 @@ class Tree:
 
                 # A 120-month-old tree has a 20% chance to spawn a baby
                 if self.months_old >= 120 and baby_roll < 20:
-                    trees.append(Tree(x,y))
+                    trees.append(Tree(x, y, self.forest_size))
                 elif self.months_old >= 12 and baby_roll < 10:
-                    trees.append(Tree(x, y))
+                    trees.append(Tree(x, y, self.forest_size))
 
         self.months_old += 1
         return
