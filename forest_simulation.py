@@ -39,7 +39,7 @@ class ForestSimulation:
             self.trees = lumberjack.pass_month(self.trees)
 
         for bear in self.bears:
-            bear.pass_month(self.lumberjacks)
+            self.lumberjacks = bear.pass_month(self.lumberjacks)
 
 
 def main():
@@ -47,5 +47,7 @@ def main():
     for year in range(400):
         for month in range(12):
             simulation.pass_month()
+        simulation.pass_year()
 
-main()
+if __name__ == "__main__":
+    main()

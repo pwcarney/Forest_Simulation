@@ -36,4 +36,4 @@ class Lumberjack:
             # Account for overflow or underflow on forest grid
             self.location = check_overflow(self.location, self.forest_size)
 
-        return
+        return trees
