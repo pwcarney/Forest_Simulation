@@ -20,25 +20,27 @@ class ForestSimulation:
             for col in range(forest_size):
 
                 # Roll for tree
-                if random.randint(0,100) < 50:
+                if random.randint(1, 100) < 50:
                     self.trees.append(Tree(row, col, self.forest_size, 12))
 
                 # Roll for lumberjack
-                if random.randint(0, 100) < 10:
-                    self.lumberjacks.append(Lumberjack(row, col))
+                if random.randint(1, 100) < 10:
+                    self.lumberjacks.append(Lumberjack(row, col, self.forest_size))
 
                 # Roll for bears
-                if random.randint(0, 100) < 2:
-                    self.bears.append(Bear(row, col))
+                if random.randint(1, 100) < 2:
+                    self.bears.append(Bear(row, col, self.forest_size))
 
     def pass_month(self):
 
         [tree.pass_month(self.trees) for tree in self.trees]
 
-        [lumberjack.pass_month(self.lumberjacks) for lumberjack in self.lumberjacks]
+        for lumberjack in self.lumberjacks:
+            self.trees = lumberjack.pass_month(self.trees)
 
         for bear in self.bears:
-            bear.pass_month
+            bear.pass_month(self.lumberjacks)
+
 
 def main():
     simulation = ForestSimulation(10)

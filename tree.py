@@ -1,3 +1,5 @@
+from utils import *
+
 import random
 
 
@@ -20,14 +22,7 @@ class Tree:
             for y in range(self.location[1] - 1, self.location[1] + 2):
 
                 # Account for overflow or underflow on forest grid
-                if x > self.forest_size:
-                    x = 0
-                if x < 0:
-                    x = self.forest_size
-                if y > self.forest_size:
-                    y = 0
-                if y < 0:
-                    y = self.forest_size
+                (x,y) = check_overflow((x,y), self.forest_size)
 
                 # Can't have a new tree at own location
                 if (x,y) == self.location:
