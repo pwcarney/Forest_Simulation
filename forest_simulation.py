@@ -68,8 +68,14 @@ class ForestSimulation:
 
     def pass_year(self):
 
+        print("Year {0} Report:".format(self.month_counter/12))
+
+        print("Forest has {0} trees, {1} lumberjacks, and {2} bears."
+              .format(len(self.trees), len(self.lumberjacks), len(self.bears)))
+
         # Hire new lumberjacks based on the amount of lumber gathered. Too little lumber? Fire a jack at random.
         total_lumber = sum([lumberjack.lumber for lumberjack in self.lumberjacks])
+        print("Lumber gathered: {0}".format(total_lumber))
         if total_lumber >= len(self.lumberjacks):
             for new_lumberjack in range(0,floor(total_lumber / len(self.lumberjacks))):
                 x_pos = random.choice(range(self.forest_size))
@@ -81,6 +87,7 @@ class ForestSimulation:
 
         # If there are no mawings for a year, add a bear, otherwise, remove one at random
         total_mawings = sum([bear.maws for bear in self.bears])
+        print("Bear mawings: {0}".format(total_mawings))
         if total_mawings == 0:
             x_pos = random.choice(range(self.forest_size))
             y_pos = random.choice(range(self.forest_size))
