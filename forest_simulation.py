@@ -5,6 +5,7 @@ from lumberjack import Lumberjack
 
 import random
 import time
+import _thread as thread
 from math import floor
 import tkinter as tk
 
@@ -42,7 +43,7 @@ class ForestSimulation:
         print("Starting with {0} lumberjacks.".format(len(self.lumberjacks)))
         print("Starting with {0} bears.".format(len(self.bears)))
 
-        self.start_display()
+        thread.start_new_thread(self.start_display, ())
 
     def pass_month(self):
 
