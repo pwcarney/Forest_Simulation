@@ -41,6 +41,13 @@ class ForestSimulation:
         for bear in self.bears:
             self.lumberjacks = bear.pass_month(self.lumberjacks)
 
+    def pass_year(self):
+
+        total_lumber = sum([lumberjack.lumber for lumberjack in self.lumberjacks])
+
+        total_mawings = sum([bear.maws for bear in self.bears])
+
+
 
 def main():
     simulation = ForestSimulation(10)
