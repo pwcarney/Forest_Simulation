@@ -52,13 +52,13 @@ class ForestSimulation:
 
         pre_lumber_tree_len = len(self.trees)
         for lumberjack in self.lumberjacks:
-            self.trees = lumberjack.pass_month(self.trees)
+            self.trees = lumberjack.pass_month(self.trees, self.lumberjacks)
         post_lumber_tree_len = len(self.trees)
         print("{0} trees chopped down".format(pre_lumber_tree_len - post_lumber_tree_len))
 
         pre_bear_lumber_len = len(self.lumberjacks)
         for bear in self.bears:
-            self.lumberjacks = bear.pass_month(self.lumberjacks)
+            self.lumberjacks = bear.pass_month(self.lumberjacks, self.bears)
         post_bear_lumber_len = len(self.lumberjacks)
         print("{0} lumberjacks mauled".format(pre_bear_lumber_len - post_bear_lumber_len))
 
@@ -73,21 +73,29 @@ class ForestSimulation:
         print("Forest has {0} trees, {1} lumberjacks, and {2} bears."
               .format(len(self.trees), len(self.lumberjacks), len(self.bears)))
 
-        # Hire new lumberjacks based on the amount of lumber gathered. Too little lumber? Fire a jack at random.
+        # Check lumber and reset to 0 for every lumberjack
         total_lumber = sum([lumberjack.lumber for lumberjack in self.lumberjacks])
         print("Lumber gathered: {0}".format(total_lumber))
+        for lumberjack in self.lumberjacks:
+            lumberjack.lumber = 0
+
+        # Hire new lumberjacks based on the amount of lumber gathered. Too little lumber? Fire a jack at random.
         if total_lumber >= len(self.lumberjacks):
-            for new_lumberjack in range(0,floor(total_lumber / len(self.lumberjacks))):
+            for new_lumberjacks in range(0, floor(total_lumber / len(self.lumberjacks))):
                 x_pos = random.choice(range(self.forest_size))
                 y_pos = random.choice(range(self.forest_size))
                 self.lumberjacks.append(Lumberjack(x_pos, y_pos, self.forest_size))
-        elif len(self.lumberjacks) > 1:
+        elif len(self.lumberjacks) > 1:  # Can't go below 1
             random.shuffle(self.lumberjacks)
             self.lumberjacks.pop()
 
-        # If there are no mawings for a year, add a bear, otherwise, remove one at random
+        # Check mawings and reset to 0 for every bear
         total_mawings = sum([bear.maws for bear in self.bears])
         print("Bear mawings: {0}".format(total_mawings))
+        for bear in self.bears:
+            bear.maws = 0
+
+        # If there are no mawings for a year, add a bear, otherwise, remove one at random
         if total_mawings == 0:
             x_pos = random.choice(range(self.forest_size))
             y_pos = random.choice(range(self.forest_size))
