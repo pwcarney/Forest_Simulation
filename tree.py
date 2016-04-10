@@ -45,5 +45,5 @@ class Tree:
 
     def is_tree_adjacent(self, x, y, trees):
         for other_tree in trees:
-            if other_tree.location == zip(x, y):
+            if other_tree.location == (x, y):
                 return True
