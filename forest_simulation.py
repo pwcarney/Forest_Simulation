@@ -1,3 +1,4 @@
+from gui import Application
 from tree import Tree
 from bear import Bear
 from lumberjack import Lumberjack
@@ -5,6 +6,7 @@ from lumberjack import Lumberjack
 import random
 import time
 from math import floor
+import tkinter as tk
 
 
 class ForestSimulation:
@@ -39,6 +41,8 @@ class ForestSimulation:
         print("Starting with {0} trees.".format(len(self.trees)))
         print("Starting with {0} lumberjacks.".format(len(self.lumberjacks)))
         print("Starting with {0} bears.".format(len(self.bears)))
+
+        self.start_display()
 
     def pass_month(self):
 
@@ -104,9 +108,14 @@ class ForestSimulation:
             random.shuffle(self.bears)
             self.bears.pop()
 
+    def start_display(self):
+        root = tk.Tk()
+        app = Application(master=root)
+        app.mainloop()
+
 
 def main():
-    simulation = ForestSimulation(10)
+    simulation = ForestSimulation(50)
     for year in range(400):
         for month in range(12):
             if simulation.pass_month() == 0:
